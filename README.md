@@ -16,7 +16,7 @@ To build
     $ mvn install
 
 
-### Running adam-examples using ```spark-shell```
+### Running adam-explorer using ```spark-shell```
 
 ```
 $ spark-shell \
