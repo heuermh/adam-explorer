@@ -25,6 +25,8 @@ import org.dishevelled.eventlist.view.ElementsList;
 
 import org.dishevelled.iconbundle.tango.TangoProject;
 
+import org.dishevelled.identify.StripeListCellRenderer;
+
 import org.dishevelled.layout.LabelFieldPanel;
 
 /**

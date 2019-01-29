@@ -54,6 +54,8 @@ import org.dishevelled.eventlist.view.ElementsTable;
 
 import org.dishevelled.iconbundle.tango.TangoProject;
 
+import org.dishevelled.identify.StripeTableCellRenderer;
+
 import org.dishevelled.layout.LabelFieldPanel;
 
 import scala.collection.JavaConversions;
