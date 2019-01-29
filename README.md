@@ -43,10 +43,13 @@ scala> import com.github.heuermh.adam.explorer.ADAMExplorer._
 import com.github.heuermh.adam.explorer.ADAMExplorer._
 
 scala> val alignments = sc.loadAlignments("sample.bam")
-alignments: org.bdgenomics.adam.rdd.read.AlignmentRecordDataset = RDDBoundAlignmentRecordDataset with 2 reference sequences, 0 read groups, and 2 processing steps
+alignments: org.bdgenomics.adam.rdd.read.AlignmentRecordRDD = RDDBoundAlignmentRecordRDD
+with 85 reference sequences, 3 read groups, and 0 processing steps
 
 scala> explore(alignments)
 res0: Int = 0
+
+scala>
 ```
 
 ![adam-explorer screenshot](https://github.com/heuermh/adam-explorer/raw/master/images/screen-shot.png)
