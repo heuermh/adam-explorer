@@ -196,7 +196,12 @@ final class GenotypeView extends LabelFieldPanel {
 
         @Override
         public void add() {
-            model.take(model.getGenotypes().size() * 2);
+            if (model.getGenotypes().isEmpty()) {
+                model.take(10);
+            }
+            else {
+                model.take(model.getGenotypes().size() * 2);
+            }
         }
     }
 }

@@ -178,7 +178,12 @@ final class FragmentView extends LabelFieldPanel {
 
         @Override
         public void add() {
-            model.take(model.getFragments().size() * 2);
+            if (model.getFragments().isEmpty()) {
+                model.take(10);
+            }
+            else {
+                model.take(model.getFragments().size() * 2);
+            }
         }
     }
 }

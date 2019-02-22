@@ -204,7 +204,12 @@ final class AlignmentView extends LabelFieldPanel {
 
         @Override
         public void add() {
-            model.take(model.getAlignments().size() * 2);
+            if (model.getAlignments().isEmpty()) {
+                model.take(10);
+            }
+            else {
+                model.take(model.getAlignments().size() * 2);
+            }
         }
     }
 }

@@ -188,7 +188,12 @@ final class VariantView extends LabelFieldPanel {
 
         @Override
         public void add() {
-            model.take(model.getVariants().size() * 2);
+            if (model.getVariants().isEmpty()) {
+                model.take(10);
+            }
+            else {
+                model.take(model.getVariants().size() * 2);
+            }
         }
     }
 }

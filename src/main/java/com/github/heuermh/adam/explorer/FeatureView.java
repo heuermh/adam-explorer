@@ -178,7 +178,12 @@ final class FeatureView extends LabelFieldPanel {
 
         @Override
         public void add() {
-            model.take(model.getFeatures().size() * 2);
+            if (model.getFeatures().isEmpty()) {
+                model.take(10);
+            }
+            else {
+                model.take(model.getFeatures().size() * 2);
+            }
         }
     }
 }
