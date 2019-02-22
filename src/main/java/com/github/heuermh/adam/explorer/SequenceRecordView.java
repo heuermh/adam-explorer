@@ -28,50 +28,47 @@ import org.dishevelled.eventlist.view.ElementsTable;
 
 import org.dishevelled.iconbundle.tango.TangoProject;
 
-import org.dishevelled.identify.StripeTableCellRenderer;
-
 import org.dishevelled.layout.LabelFieldPanel;
 
 /**
- * Sequence view.
+ * Sequence record view.
  *
  * @author  Michael Heuer
  */
-final class SequenceView extends LabelFieldPanel {
+final class SequenceRecordView extends LabelFieldPanel {
 
     /**
-     * Create a new sequence view with the specified sequences.
+     * Create a new sequence record view with the specified sequence records.
      *
-     * @param sequences sequences, must not be null
+     * @param sequenceRecords sequence records, must not be null
      */
-    SequenceView(final EventList<SequenceRecord> sequences) {
+    SequenceRecordView(final EventList<SequenceRecord> sequenceRecords) {
         super();
         setBorder(new EmptyBorder(12, 12, 12, 12));
         setOpaque(false);
-        addFinalField(new SequenceTable(sequences));
+        addFinalField(new SequenceRecordTable(sequenceRecords));
     }
 
     /**
-     * Sequence table.
+     * Sequence record table.
      */
-    static class SequenceTable extends ElementsTable<SequenceRecord> {
+    static class SequenceRecordTable extends ElementsTable<SequenceRecord> {
         private static final String[] PROPERTY_NAMES = { "name", "length" };
         private static final String[] COLUMN_LABELS = { "Name", "Length" };
         private static final TableFormat<SequenceRecord> TABLE_FORMAT = GlazedLists.tableFormat(SequenceRecord.class, PROPERTY_NAMES, COLUMN_LABELS);
 
         /**
-         * Create a new sequence table with the specified sequences.
+         * Create a new sequence record table with the specified sequence records.
          *
-         * @param sequences sequences, must not be null
+         * @param sequenceRecords sequence records, must not be null
          */
-        SequenceTable(final EventList<SequenceRecord> sequences) {
-            super("Sequences:", sequences, TABLE_FORMAT);
+        SequenceRecordTable(final EventList<SequenceRecord> sequenceRecords) {
+            super("Sequences:", sequenceRecords, TABLE_FORMAT);
 
             getAddAction().setEnabled(false);
             getPasteAction().setEnabled(false);
             getToolBar().displayIcons();
             getToolBar().setIconSize(TangoProject.EXTRA_SMALL);
-            StripeTableCellRenderer.install(getTable());
         }
     }
 }

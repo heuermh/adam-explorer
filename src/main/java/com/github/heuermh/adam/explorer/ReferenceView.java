@@ -28,8 +28,6 @@ import org.dishevelled.eventlist.view.ElementsTable;
 
 import org.dishevelled.iconbundle.tango.TangoProject;
 
-import org.dishevelled.identify.StripeTableCellRenderer;
-
 import org.dishevelled.layout.LabelFieldPanel;
 
 /**
@@ -40,15 +38,15 @@ import org.dishevelled.layout.LabelFieldPanel;
 final class ReferenceView extends LabelFieldPanel {
 
     /**
-     * Create a new reference view with the specified sequences.
+     * Create a new reference view with the specified references.
      *
-     * @param sequences sequences, must not be null
+     * @param references references, must not be null
      */
-    ReferenceView(final EventList<Reference> sequences) {
+    ReferenceView(final EventList<Reference> references) {
         super();
         setBorder(new EmptyBorder(12, 12, 12, 12));
         setOpaque(false);
-        addFinalField(new ReferenceTable(sequences));
+        addFinalField(new ReferenceTable(references));
     }
 
     /**
@@ -60,18 +58,17 @@ final class ReferenceView extends LabelFieldPanel {
         private static final TableFormat<Reference> TABLE_FORMAT = GlazedLists.tableFormat(Reference.class, PROPERTY_NAMES, COLUMN_LABELS);
 
         /**
-         * Create a new reference table with the specified sequences.
+         * Create a new reference table with the specified references.
          *
-         * @param sequences sequences, must not be null
+         * @param references references, must not be null
          */
-        ReferenceTable(final EventList<Reference> sequences) {
-            super("Sequences:", sequences, TABLE_FORMAT);
+        ReferenceTable(final EventList<Reference> references) {
+            super("References:", references, TABLE_FORMAT);
 
             getAddAction().setEnabled(false);
             getPasteAction().setEnabled(false);
             getToolBar().displayIcons();
             getToolBar().setIconSize(TangoProject.EXTRA_SMALL);
-            StripeTableCellRenderer.install(getTable());
         }
     }
 }

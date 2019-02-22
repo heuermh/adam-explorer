@@ -44,8 +44,6 @@ import org.dishevelled.eventlist.view.ElementsTable;
 
 import org.dishevelled.iconbundle.tango.TangoProject;
 
-import org.dishevelled.identify.StripeTableCellRenderer;
-
 import org.dishevelled.layout.LabelFieldPanel;
 
 import scala.collection.JavaConversions;
@@ -75,7 +73,7 @@ final class FeatureView extends LabelFieldPanel {
     private void layoutComponents() {
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.add("Features", layoutFeatureView());
-        tabbedPane.add("Sequences", new ReferenceView(model.getSequences()));
+        tabbedPane.add("References", new ReferenceView(model.getReferences()));
         addFinalField(tabbedPane);
     }
 
@@ -95,7 +93,7 @@ final class FeatureView extends LabelFieldPanel {
      */
     static class FeatureModel {
         private final FeatureDataset dataset;
-        private final EventList<Reference> sequences;
+        private final EventList<Reference> references;
         private final EventList<Feature> features;
 
         /**
@@ -108,7 +106,7 @@ final class FeatureView extends LabelFieldPanel {
             features = GlazedLists.eventList(new ArrayList<Feature>());
 
             List<SequenceRecord> s = JavaConversions.seqAsJavaList(dataset.sequences().records());;
-            sequences = GlazedLists.eventList(s.stream().map(v -> v.toADAMReference()).collect(Collectors.toList()));
+            references = GlazedLists.eventList(s.stream().map(v -> v.toADAMReference()).collect(Collectors.toList()));
         }
 
         void take(final int take) {
@@ -147,8 +145,8 @@ final class FeatureView extends LabelFieldPanel {
             return features;
         }
 
-        EventList<Reference> getSequences() {
-            return sequences;
+        EventList<Reference> getReferences() {
+            return references;
         }
     }
 
@@ -173,7 +171,6 @@ final class FeatureView extends LabelFieldPanel {
             getPasteAction().setEnabled(false);
             getToolBar().displayIcons();
             getToolBar().setIconSize(TangoProject.EXTRA_SMALL);
-            StripeTableCellRenderer.install(getTable());
         }
 
         @Override

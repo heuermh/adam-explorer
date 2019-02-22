@@ -54,8 +54,6 @@ import org.dishevelled.eventlist.view.ElementsTable;
 
 import org.dishevelled.iconbundle.tango.TangoProject;
 
-import org.dishevelled.identify.StripeTableCellRenderer;
-
 import org.dishevelled.layout.LabelFieldPanel;
 
 import scala.collection.JavaConversions;
@@ -85,7 +83,7 @@ final class AlignmentView extends LabelFieldPanel {
     private void layoutComponents() {
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.add("Alignments", layoutAlignmentView());
-        tabbedPane.add("Sequences", new ReferenceView(model.getSequences()));
+        tabbedPane.add("References", new ReferenceView(model.getReferences()));
         tabbedPane.add("Read Groups", new ReadGroupView(model.getReadGroups()));
         tabbedPane.add("Processing Steps", new ProcessingStepView(model.getProcessingSteps()));
         addFinalField(tabbedPane);
@@ -107,7 +105,7 @@ final class AlignmentView extends LabelFieldPanel {
      */
     static class AlignmentModel {
         private final AlignmentRecordDataset dataset;
-        private final EventList<Reference> sequences;
+        private final EventList<Reference> references;
         private final EventList<ReadGroup> readGroups;
         private final EventList<ProcessingStep> processingSteps;
         private final EventList<AlignmentRecord> alignments;
@@ -122,7 +120,7 @@ final class AlignmentView extends LabelFieldPanel {
             alignments = GlazedLists.eventList(new ArrayList<AlignmentRecord>());
 
             List<SequenceRecord> s = JavaConversions.seqAsJavaList(dataset.sequences().records());;
-            sequences = GlazedLists.eventList(s.stream().map(v -> v.toADAMReference()).collect(Collectors.toList()));
+            references = GlazedLists.eventList(s.stream().map(v -> v.toADAMReference()).collect(Collectors.toList()));
 
             List<org.bdgenomics.adam.models.ReadGroup> rg = JavaConversions.seqAsJavaList(dataset.readGroups().readGroups());
             readGroups = GlazedLists.eventList(rg.stream().map(v -> v.toMetadata()).collect(Collectors.toList()));
@@ -165,8 +163,8 @@ final class AlignmentView extends LabelFieldPanel {
             return alignments;
         }
 
-        EventList<Reference> getSequences() {
-            return sequences;
+        EventList<Reference> getReferences() {
+            return references;
         }
 
         EventList<ReadGroup> getReadGroups() {
@@ -199,7 +197,6 @@ final class AlignmentView extends LabelFieldPanel {
             getPasteAction().setEnabled(false);
             getToolBar().displayIcons();
             getToolBar().setIconSize(TangoProject.EXTRA_SMALL);
-            StripeTableCellRenderer.install(getTable());
         }
 
         @Override

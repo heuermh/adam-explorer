@@ -25,8 +25,6 @@ import org.dishevelled.eventlist.view.ElementsList;
 
 import org.dishevelled.iconbundle.tango.TangoProject;
 
-import org.dishevelled.identify.StripeListCellRenderer;
-
 import org.dishevelled.layout.LabelFieldPanel;
 
 /**
@@ -65,7 +63,6 @@ final class HeaderLineView extends LabelFieldPanel {
             getPasteAction().setEnabled(false);
             getToolBar().displayIcons();
             getToolBar().setIconSize(TangoProject.EXTRA_SMALL);
-            StripeListCellRenderer.install(getList());
         }
     }
 }

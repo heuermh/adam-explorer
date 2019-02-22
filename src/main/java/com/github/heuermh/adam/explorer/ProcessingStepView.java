@@ -28,8 +28,6 @@ import org.dishevelled.eventlist.view.ElementsTable;
 
 import org.dishevelled.iconbundle.tango.TangoProject;
 
-import org.dishevelled.identify.StripeTableCellRenderer;
-
 import org.dishevelled.layout.LabelFieldPanel;
 
 /**
@@ -71,7 +69,6 @@ final class ProcessingStepView extends LabelFieldPanel {
             getPasteAction().setEnabled(false);
             getToolBar().displayIcons();
             getToolBar().setIconSize(TangoProject.EXTRA_SMALL);
-            StripeTableCellRenderer.install(getTable());
         }
     }
 }

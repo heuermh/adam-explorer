@@ -47,8 +47,6 @@ import org.dishevelled.eventlist.view.ElementsTable;
 
 import org.dishevelled.iconbundle.tango.TangoProject;
 
-import org.dishevelled.identify.StripeTableCellRenderer;
-
 import org.dishevelled.layout.LabelFieldPanel;
 
 import scala.collection.JavaConversions;
@@ -78,7 +76,7 @@ final class GenotypeView extends LabelFieldPanel {
     private void layoutComponents() {
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.add("Genotypes", layoutGenotypeView());
-        tabbedPane.add("Sequences", new ReferenceView(model.getSequences()));
+        tabbedPane.add("References", new ReferenceView(model.getReferences()));
         tabbedPane.add("Samples", new SampleView(model.getSamples()));
         tabbedPane.add("Header Lines", new HeaderLineView(model.getHeaderLines()));
         addFinalField(tabbedPane);
@@ -100,7 +98,7 @@ final class GenotypeView extends LabelFieldPanel {
      */
     static class GenotypeModel {
         private final GenotypeDataset dataset;
-        private final EventList<Reference> sequences;
+        private final EventList<Reference> references;
         private final EventList<Sample> samples;
         private final EventList<VCFHeaderLine> headerLines;
         private final EventList<Genotype> genotypes;
@@ -115,7 +113,7 @@ final class GenotypeView extends LabelFieldPanel {
             genotypes = GlazedLists.eventList(new ArrayList<Genotype>());
 
             List<SequenceRecord> s = JavaConversions.seqAsJavaList(dataset.sequences().records());
-            sequences = GlazedLists.eventList(s.stream().map(v -> v.toADAMReference()).collect(Collectors.toList()));
+            references = GlazedLists.eventList(s.stream().map(v -> v.toADAMReference()).collect(Collectors.toList()));
 
             samples = GlazedLists.eventList(JavaConversions.seqAsJavaList(dataset.samples()));
             headerLines = GlazedLists.eventList(JavaConversions.seqAsJavaList(dataset.headerLines()));
@@ -157,8 +155,8 @@ final class GenotypeView extends LabelFieldPanel {
             return genotypes;
         }
 
-        EventList<Reference> getSequences() {
-            return sequences;
+        EventList<Reference> getReferences() {
+            return references;
         }
 
         EventList<Sample> getSamples() {
@@ -191,7 +189,6 @@ final class GenotypeView extends LabelFieldPanel {
             getPasteAction().setEnabled(false);
             getToolBar().displayIcons();
             getToolBar().setIconSize(TangoProject.EXTRA_SMALL);
-            StripeTableCellRenderer.install(getTable());
         }
 
         @Override

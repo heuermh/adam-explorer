@@ -46,8 +46,6 @@ import org.dishevelled.eventlist.view.ElementsTable;
 
 import org.dishevelled.iconbundle.tango.TangoProject;
 
-import org.dishevelled.identify.StripeTableCellRenderer;
-
 import org.dishevelled.layout.LabelFieldPanel;
 
 import scala.collection.JavaConversions;
@@ -77,7 +75,7 @@ final class VariantView extends LabelFieldPanel {
     private void layoutComponents() {
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.add("Variants", layoutVariantView());
-        tabbedPane.add("Sequences", new ReferenceView(model.getSequences()));
+        tabbedPane.add("References", new ReferenceView(model.getReferences()));
         tabbedPane.add("Header Lines", new HeaderLineView(model.getHeaderLines()));
         addFinalField(tabbedPane);
     }
@@ -98,7 +96,7 @@ final class VariantView extends LabelFieldPanel {
      */
     static class VariantModel {
         private final VariantDataset dataset;
-        private final EventList<Reference> sequences;
+        private final EventList<Reference> references;
         private final EventList<VCFHeaderLine> headerLines;
         private final EventList<Variant> variants;
 
@@ -112,7 +110,7 @@ final class VariantView extends LabelFieldPanel {
             variants = GlazedLists.eventList(new ArrayList<Variant>());
 
             List<SequenceRecord> s = JavaConversions.seqAsJavaList(dataset.sequences().records());
-            sequences = GlazedLists.eventList(s.stream().map(v -> v.toADAMReference()).collect(Collectors.toList()));
+            references = GlazedLists.eventList(s.stream().map(v -> v.toADAMReference()).collect(Collectors.toList()));
 
             headerLines = GlazedLists.eventList(JavaConversions.seqAsJavaList(dataset.headerLines()));
         }
@@ -153,8 +151,8 @@ final class VariantView extends LabelFieldPanel {
             return variants;
         }
 
-        EventList<Reference> getSequences() {
-            return sequences;
+        EventList<Reference> getReferences() {
+            return references;
         }
 
         EventList<VCFHeaderLine> getHeaderLines() {
@@ -183,7 +181,6 @@ final class VariantView extends LabelFieldPanel {
             getPasteAction().setEnabled(false);
             getToolBar().displayIcons();
             getToolBar().setIconSize(TangoProject.EXTRA_SMALL);
-            StripeTableCellRenderer.install(getTable());
         }
 
         @Override
