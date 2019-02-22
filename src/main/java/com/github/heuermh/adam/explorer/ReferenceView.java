@@ -22,6 +22,8 @@ import ca.odell.glazedlists.GlazedLists;
 
 import ca.odell.glazedlists.gui.TableFormat;
 
+import com.google.common.base.Joiner;
+
 import org.bdgenomics.formats.avro.Reference;
 
 import org.dishevelled.eventlist.view.ElementsTable;
@@ -52,7 +54,7 @@ final class ReferenceView extends LabelFieldPanel {
     /**
      * Reference table.
      */
-    static class ReferenceTable extends ElementsTable<Reference> {
+    static class ReferenceTable extends ExplorerTable<Reference> {
         private static final String[] PROPERTY_NAMES = { "index", "name", "length", "assembly", "species", "md5", "sourceUri", "sourceAccessions"};
         private static final String[] COLUMN_LABELS = { "Index", "Name", "Length", "Assembly", "Species", "Checksum (md5)", "Source URI", "Source Accessions" };
         private static final TableFormat<Reference> TABLE_FORMAT = GlazedLists.tableFormat(Reference.class, PROPERTY_NAMES, COLUMN_LABELS);
@@ -64,11 +66,16 @@ final class ReferenceView extends LabelFieldPanel {
          */
         ReferenceTable(final EventList<Reference> references) {
             super("References:", references, TABLE_FORMAT);
-
             getAddAction().setEnabled(false);
-            getPasteAction().setEnabled(false);
-            getToolBar().displayIcons();
-            getToolBar().setIconSize(TangoProject.EXTRA_SMALL);
+        }
+
+
+        @Override
+        protected String transferableString(final Reference r) {
+            return Joiner
+                .on("\t")
+                .useForNull("")
+                .join(r.index, r.name, r.length, r.assembly, r.species, r.md5, r.sourceUri, r.sourceAccessions);
         }
     }
 }

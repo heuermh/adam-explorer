@@ -38,6 +38,8 @@ import ca.odell.glazedlists.GlazedLists;
 
 import ca.odell.glazedlists.gui.TableFormat;
 
+import com.google.common.base.Joiner;
+
 import org.bdgenomics.adam.rdd.GenomicDataset;
 
 import org.bdgenomics.adam.rdd.read.AlignmentRecordDataset;
@@ -50,9 +52,6 @@ import org.bdgenomics.formats.avro.ProcessingStep;
 import org.bdgenomics.formats.avro.ReadGroup;
 
 import org.dishevelled.eventlist.view.CountLabel;
-import org.dishevelled.eventlist.view.ElementsTable;
-
-import org.dishevelled.iconbundle.tango.TangoProject;
 
 import org.dishevelled.layout.LabelFieldPanel;
 
@@ -179,7 +178,7 @@ final class AlignmentView extends LabelFieldPanel {
     /**
      * Alignment table.
      */
-    static class AlignmentTable extends ElementsTable<AlignmentRecord> {
+    static class AlignmentTable extends ExplorerTable<AlignmentRecord> {
         private final AlignmentModel model;
         private static final String[] PROPERTY_NAMES = { "referenceName", "start", "end", "readName", "readGroupSampleId", "readGroupId" };
         private static final String[] COLUMN_LABELS = { "Reference Name", "Start", "End", "Read Name", "Sample", "Read Group" };
@@ -192,11 +191,16 @@ final class AlignmentView extends LabelFieldPanel {
          */
         AlignmentTable(final AlignmentModel model) {
             super("Alignments:", model.getAlignments(), TABLE_FORMAT);
-
             this.model = model;
-            getPasteAction().setEnabled(false);
-            getToolBar().displayIcons();
-            getToolBar().setIconSize(TangoProject.EXTRA_SMALL);
+        }
+
+
+        @Override
+        protected String transferableString(final AlignmentRecord a) {
+            return Joiner
+                .on("\t")
+                .useForNull("")
+                .join(a.referenceName, a.start, a.end, a.readName, a.readGroupSampleId, a.readGroupId);
         }
 
         @Override

@@ -32,6 +32,8 @@ import ca.odell.glazedlists.GlazedLists;
 
 import ca.odell.glazedlists.gui.TableFormat;
 
+import com.google.common.base.Joiner;
+
 import htsjdk.variant.vcf.VCFHeaderLine;
 
 import org.bdgenomics.adam.rdd.variant.GenotypeDataset;
@@ -171,7 +173,7 @@ final class GenotypeView extends LabelFieldPanel {
     /**
      * Genotype table.
      */
-    static class GenotypeTable extends ElementsTable<Genotype> {
+    static class GenotypeTable extends ExplorerTable<Genotype> {
         private final GenotypeModel model;
         private static final String[] PROPERTY_NAMES = { "referenceName", "start", "end", "variant.referenceAllele", "variant.alternateAllele", "alleles", "sampleId" };
         private static final String[] COLUMN_LABELS = { "Reference Name", "Start", "End", "Ref", "Alt", "Alleles", "Sample" };
@@ -184,11 +186,25 @@ final class GenotypeView extends LabelFieldPanel {
          */
         GenotypeTable(final GenotypeModel model) {
             super("Genotypes:", model.getGenotypes(), TABLE_FORMAT);
-
             this.model = model;
-            getPasteAction().setEnabled(false);
-            getToolBar().displayIcons();
-            getToolBar().setIconSize(TangoProject.EXTRA_SMALL);
+        }
+
+
+        @Override
+        protected String transferableString(final Genotype g) {
+            return Joiner
+                .on("\t")
+                .useForNull("")
+                .join
+                (
+                 g.referenceName,
+                 g.start,
+                 g.end,
+                 g.getVariant().getReferenceAllele(),
+                 g.getVariant().getAlternateAllele(),
+                 g.alleles,
+                 g.sampleId
+                 );
         }
 
         @Override

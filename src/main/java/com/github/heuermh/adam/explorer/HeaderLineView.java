@@ -49,7 +49,7 @@ final class HeaderLineView extends LabelFieldPanel {
     /**
      * Header line list.
      */
-    static class HeaderLineList extends ElementsList<VCFHeaderLine> {
+    static class HeaderLineList extends ExplorerList<VCFHeaderLine> {
 
         /**
          * Create a new header line list with the specified header lines.
@@ -58,11 +58,14 @@ final class HeaderLineView extends LabelFieldPanel {
          */
         HeaderLineList(final EventList<VCFHeaderLine> headerLines) {
             super("Header lines:", headerLines);
-
             getAddAction().setEnabled(false);
             getPasteAction().setEnabled(false);
-            getToolBar().displayIcons();
-            getToolBar().setIconSize(TangoProject.EXTRA_SMALL);
+        }
+
+
+        @Override
+        protected String transferableString(final VCFHeaderLine headerLine) {
+            return headerLine.toString();
         }
     }
 }

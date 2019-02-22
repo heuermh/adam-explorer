@@ -22,6 +22,8 @@ import ca.odell.glazedlists.GlazedLists;
 
 import ca.odell.glazedlists.gui.TableFormat;
 
+import com.google.common.base.Joiner;
+
 import org.bdgenomics.formats.avro.ReadGroup;
 
 import org.dishevelled.eventlist.view.ElementsTable;
@@ -52,7 +54,7 @@ final class ReadGroupView extends LabelFieldPanel {
     /**
      * Read group table.
      */
-    static class ReadGroupTable extends ElementsTable<ReadGroup> {
+    static class ReadGroupTable extends ExplorerTable<ReadGroup> {
         private static final String[] PROPERTY_NAMES = { "id", "sampleId", "description", "sequencingCenter", "runDateEpoch", "flowOrder", "keySequence", "library", "predictedMedianInsertSize", "platform", "platformModel", "platformUnit" };
         private static final String[] COLUMN_LABELS = { "Identifier", "Sample", "Description", "Sequencing Center", "Run Date", "Flow Order", "Key Sequence", "Library", "Insert Size", "Platform", "Platform Model", "Platform Unit" };
         private static final TableFormat<ReadGroup> TABLE_FORMAT = GlazedLists.tableFormat(ReadGroup.class, PROPERTY_NAMES, COLUMN_LABELS);
@@ -64,11 +66,30 @@ final class ReadGroupView extends LabelFieldPanel {
          */
         ReadGroupTable(final EventList<ReadGroup> readGroups) {
             super("Read groups:", readGroups, TABLE_FORMAT);
-
             getAddAction().setEnabled(false);
-            getPasteAction().setEnabled(false);
-            getToolBar().displayIcons();
-            getToolBar().setIconSize(TangoProject.EXTRA_SMALL);
+        }
+
+
+        @Override
+        protected String transferableString(final ReadGroup rg) {
+            return Joiner
+                .on("\t")
+                .useForNull("")
+                .join
+                (
+                 rg.id,
+                 rg.sampleId,
+                 rg.description,
+                 rg.sequencingCenter,
+                 rg.runDateEpoch,
+                 rg.flowOrder,
+                 rg.keySequence,
+                 rg.library,
+                 rg.predictedMedianInsertSize,
+                 rg.platform,
+                 rg.platformModel,
+                 rg.platformUnit
+                 );
         }
     }
 }

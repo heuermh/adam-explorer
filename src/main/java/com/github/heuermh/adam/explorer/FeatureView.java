@@ -32,6 +32,8 @@ import ca.odell.glazedlists.GlazedLists;
 
 import ca.odell.glazedlists.gui.TableFormat;
 
+import com.google.common.base.Joiner;
+
 import org.bdgenomics.adam.rdd.feature.FeatureDataset;
 
 import org.bdgenomics.adam.models.SequenceRecord;
@@ -153,7 +155,7 @@ final class FeatureView extends LabelFieldPanel {
     /**
      * Feature table.
      */
-    static class FeatureTable extends ElementsTable<Feature> {
+    static class FeatureTable extends ExplorerTable<Feature> {
         private final FeatureModel model;
         private static final String[] PROPERTY_NAMES = { "referenceName", "start", "end", "strand", "name", "featureId", "featureType", "score" };
         private static final String[] COLUMN_LABELS = { "Reference Name", "Start", "End", "Strand", "Name", "Identifier", "Type", "Score" };
@@ -166,11 +168,16 @@ final class FeatureView extends LabelFieldPanel {
          */
         FeatureTable(final FeatureModel model) {
             super("Features:", model.getFeatures(), TABLE_FORMAT);
-
             this.model = model;
-            getPasteAction().setEnabled(false);
-            getToolBar().displayIcons();
-            getToolBar().setIconSize(TangoProject.EXTRA_SMALL);
+        }
+
+
+        @Override
+        protected String transferableString(final Feature f) {
+            return Joiner
+                .on("\t")
+                .useForNull("")
+                .join(f.referenceName, f.start, f.end, f.strand, f.name, f.featureId, f.featureType, f.score);
         }
 
         @Override

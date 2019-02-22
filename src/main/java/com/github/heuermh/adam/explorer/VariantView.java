@@ -32,6 +32,8 @@ import ca.odell.glazedlists.GlazedLists;
 
 import ca.odell.glazedlists.gui.TableFormat;
 
+import com.google.common.base.Joiner;
+
 import htsjdk.variant.vcf.VCFHeaderLine;
 
 import org.bdgenomics.adam.rdd.variant.VariantDataset;
@@ -163,7 +165,7 @@ final class VariantView extends LabelFieldPanel {
     /**
      * Variant table.
      */
-    static class VariantTable extends ElementsTable<Variant> {
+    static class VariantTable extends ExplorerTable<Variant> {
         private final VariantModel model;
         private static final String[] PROPERTY_NAMES = { "referenceName", "start", "end", "referenceAllele", "alternateAllele" };
         private static final String[] COLUMN_LABELS = { "Reference Name", "Start", "End", "Ref", "Alt" };
@@ -176,11 +178,16 @@ final class VariantView extends LabelFieldPanel {
          */
         VariantTable(final VariantModel model) {
             super("Variants:", model.getVariants(), TABLE_FORMAT);
-
             this.model = model;
-            getPasteAction().setEnabled(false);
-            getToolBar().displayIcons();
-            getToolBar().setIconSize(TangoProject.EXTRA_SMALL);
+        }
+
+
+        @Override
+        protected String transferableString(final Variant v) {
+            return Joiner
+                .on("\t")
+                .useForNull("")
+                .join(v.referenceName, v.start, v.end, v.referenceAllele, v.alternateAllele);
         }
 
         @Override

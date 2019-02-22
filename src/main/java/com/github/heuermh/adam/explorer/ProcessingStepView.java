@@ -22,6 +22,8 @@ import ca.odell.glazedlists.GlazedLists;
 
 import ca.odell.glazedlists.gui.TableFormat;
 
+import com.google.common.base.Joiner;
+
 import org.bdgenomics.formats.avro.ProcessingStep;
 
 import org.dishevelled.eventlist.view.ElementsTable;
@@ -52,7 +54,7 @@ final class ProcessingStepView extends LabelFieldPanel {
     /**
      * Processing step table.
      */
-    static class ProcessingStepTable extends ElementsTable<ProcessingStep> {
+    static class ProcessingStepTable extends ExplorerTable<ProcessingStep> {
         private static final String[] PROPERTY_NAMES = { "id", "previousId", "programName", "version", "commandLine", "description" };
         private static final String[] COLUMN_LABELS = { "Step", "Previous Step", "Program Name", "Version", "Command Line", "Description" };
         private static final TableFormat<ProcessingStep> TABLE_FORMAT = GlazedLists.tableFormat(ProcessingStep.class, PROPERTY_NAMES, COLUMN_LABELS);
@@ -64,11 +66,16 @@ final class ProcessingStepView extends LabelFieldPanel {
          */
         ProcessingStepTable(final EventList<ProcessingStep> processingSteps) {
             super("Processing steps:", processingSteps, TABLE_FORMAT);
-
             getAddAction().setEnabled(false);
-            getPasteAction().setEnabled(false);
-            getToolBar().displayIcons();
-            getToolBar().setIconSize(TangoProject.EXTRA_SMALL);
+        }
+
+
+        @Override
+        protected String transferableString(final ProcessingStep ps) {
+            return Joiner
+                .on("\t")
+                .useForNull("")
+                .join(ps.id, ps.previousId, ps.programName, ps.version, ps.commandLine, ps.description);
         }
     }
 }

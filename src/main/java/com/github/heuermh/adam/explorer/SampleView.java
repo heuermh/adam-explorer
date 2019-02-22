@@ -22,6 +22,8 @@ import ca.odell.glazedlists.GlazedLists;
 
 import ca.odell.glazedlists.gui.TableFormat;
 
+import com.google.common.base.Joiner;
+
 import org.bdgenomics.formats.avro.Sample;
 
 import org.dishevelled.eventlist.view.ElementsTable;
@@ -52,8 +54,8 @@ final class SampleView extends LabelFieldPanel {
     /**
      * Sample table.
      */
-    static class SampleTable extends ElementsTable<Sample> {
-        private static final String[] PROPERTY_NAMES = { "name", "sampleId" };
+    static class SampleTable extends ExplorerTable<Sample> {
+        private static final String[] PROPERTY_NAMES = { "name", "id" };
         private static final String[] COLUMN_LABELS = { "Name", "Identifier" }; // todo: include processing step table?
         private static final TableFormat<Sample> TABLE_FORMAT = GlazedLists.tableFormat(Sample.class, PROPERTY_NAMES, COLUMN_LABELS);
 
@@ -64,11 +66,16 @@ final class SampleView extends LabelFieldPanel {
          */
         SampleTable(final EventList<Sample> samples) {
             super("Samples:", samples, TABLE_FORMAT);
-
             getAddAction().setEnabled(false);
-            getPasteAction().setEnabled(false);
-            getToolBar().displayIcons();
-            getToolBar().setIconSize(TangoProject.EXTRA_SMALL);
+        }
+
+
+        @Override
+        protected String transferableString(final Sample s) {
+            return Joiner
+                .on("\t")
+                .useForNull("")
+                .join(s.name, s.id);
         }
     }
 }

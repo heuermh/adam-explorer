@@ -32,6 +32,8 @@ import ca.odell.glazedlists.GlazedLists;
 
 import ca.odell.glazedlists.gui.TableFormat;
 
+import com.google.common.base.Joiner;
+
 import org.bdgenomics.adam.rdd.fragment.FragmentDataset;
 
 import org.bdgenomics.adam.models.SequenceRecord;
@@ -153,7 +155,7 @@ final class FragmentView extends LabelFieldPanel {
     /**
      * Fragment table.
      */
-    static class FragmentTable extends ElementsTable<Fragment> {
+    static class FragmentTable extends ExplorerTable<Fragment> {
         private final FragmentModel model;
         private static final String[] PROPERTY_NAMES = { "name", "readGroupId", "insertSize", "alignments" };
         private static final String[] COLUMN_LABELS = { "Name", "Read Group", "Insert Size", "Alignments" };
@@ -166,11 +168,16 @@ final class FragmentView extends LabelFieldPanel {
          */
         FragmentTable(final FragmentModel model) {
             super("Fragments:", model.getFragments(), TABLE_FORMAT);
-
             this.model = model;
-            getPasteAction().setEnabled(false);
-            getToolBar().displayIcons();
-            getToolBar().setIconSize(TangoProject.EXTRA_SMALL);
+        }
+
+
+        @Override
+        protected String transferableString(final Fragment f) {
+            return Joiner
+                .on("\t")
+                .useForNull("")
+                .join(f.name, f.readGroupId, f.insertSize, f.alignments);
         }
 
         @Override
