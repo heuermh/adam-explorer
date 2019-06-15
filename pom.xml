@@ -8,7 +8,7 @@
   </parent>
   <groupId>com.github.heuermh.adamexplorer</groupId>
   <artifactId>adam-explorer_2.11</artifactId>
-  <version>0.26.0-SNAPSHOT</version>
+  <version>0.28.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>adam-explorer_2.11</name>
@@ -35,10 +35,10 @@
     </developer>
   </developers>
   <properties>
-    <adam.version>0.26.0</adam.version>
+    <adam.version>0.28.0-SNAPSHOT</adam.version>
     <scala.version>2.11.12</scala.version>
     <scala.artifact.suffix>2.11</scala.artifact.suffix>
-    <spark.version>2.3.2</spark.version>
+    <spark.version>2.4.3</spark.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.build.targetEncoding>UTF-8</project.build.targetEncoding>
     <maven.enforcer.maven-version>[3.3.1,)</maven.enforcer.maven-version>
