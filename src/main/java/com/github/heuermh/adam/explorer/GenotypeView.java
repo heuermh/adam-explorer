@@ -179,6 +179,7 @@ final class GenotypeView extends LabelFieldPanel {
         private static final String[] COLUMN_LABELS = { "Reference Name", "Start", "End", "Ref", "Alt", "Alleles", "Sample" };
         private static final TableFormat<Genotype> TABLE_FORMAT = GlazedLists.tableFormat(Genotype.class, PROPERTY_NAMES, COLUMN_LABELS);
 
+
         /**
          * Create a new genotype table with the specified model.
          *

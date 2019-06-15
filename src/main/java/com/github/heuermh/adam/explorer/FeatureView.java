@@ -38,8 +38,9 @@ import org.bdgenomics.adam.rdd.feature.FeatureDataset;
 
 import org.bdgenomics.adam.models.SequenceRecord;
 
-import org.bdgenomics.formats.avro.Reference;
 import org.bdgenomics.formats.avro.Feature;
+import org.bdgenomics.formats.avro.Reference;
+import org.bdgenomics.formats.avro.Sample;
 
 import org.dishevelled.eventlist.view.CountLabel;
 import org.dishevelled.eventlist.view.ElementsTable;
@@ -76,6 +77,7 @@ final class FeatureView extends LabelFieldPanel {
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.add("Features", layoutFeatureView());
         tabbedPane.add("References", new ReferenceView(model.getReferences()));
+        tabbedPane.add("Samples", new SampleView(model.getSamples()));
         addFinalField(tabbedPane);
     }
 
@@ -95,8 +97,10 @@ final class FeatureView extends LabelFieldPanel {
      */
     static class FeatureModel {
         private final FeatureDataset dataset;
-        private final EventList<Reference> references;
         private final EventList<Feature> features;
+        private final EventList<Reference> references;
+        private final EventList<Sample> samples;
+
 
         /**
          * Create a new feature model with the specified dataset.
@@ -109,6 +113,8 @@ final class FeatureView extends LabelFieldPanel {
 
             List<SequenceRecord> s = JavaConversions.seqAsJavaList(dataset.sequences().records());;
             references = GlazedLists.eventList(s.stream().map(v -> v.toADAMReference()).collect(Collectors.toList()));
+
+            samples = GlazedLists.eventList(JavaConversions.seqAsJavaList(dataset.samples()));
         }
 
         void take(final int take) {
@@ -150,6 +156,10 @@ final class FeatureView extends LabelFieldPanel {
         EventList<Reference> getReferences() {
             return references;
         }
+
+        EventList<Sample> getSamples() {
+            return samples;
+        }
     }
 
     /**
@@ -157,9 +167,10 @@ final class FeatureView extends LabelFieldPanel {
      */
     static class FeatureTable extends ExplorerTable<Feature> {
         private final FeatureModel model;
-        private static final String[] PROPERTY_NAMES = { "referenceName", "start", "end", "strand", "name", "featureId", "featureType", "score" };
-        private static final String[] COLUMN_LABELS = { "Reference Name", "Start", "End", "Strand", "Name", "Identifier", "Type", "Score" };
+        private static final String[] PROPERTY_NAMES = { "referenceName", "start", "end", "strand", "name", "featureId", "featureType", "score", "sampleId" };
+        private static final String[] COLUMN_LABELS = { "Reference Name", "Start", "End", "Strand", "Name", "Identifier", "Type", "Score", "Sample" };
         private static final TableFormat<Feature> TABLE_FORMAT = GlazedLists.tableFormat(Feature.class, PROPERTY_NAMES, COLUMN_LABELS);
+
 
         /**
          * Create a new feature table with the specified model.
@@ -177,7 +188,7 @@ final class FeatureView extends LabelFieldPanel {
             return Joiner
                 .on("\t")
                 .useForNull("")
-                .join(f.referenceName, f.start, f.end, f.strand, f.name, f.featureId, f.featureType, f.score);
+                .join(f.referenceName, f.start, f.end, f.strand, f.name, f.featureId, f.featureType, f.score, f.sampleId);
         }
 
         @Override
