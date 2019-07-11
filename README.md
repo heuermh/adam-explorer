@@ -1,6 +1,11 @@
 # adam-explorer
 Interactive explorer for ADAM genomics data models.  Apache 2 licensed.
 
+[![Build Status](https://travis-ci.org/heuermh/adam-explorer.svg?branch=master)](https://travis-ci.org/heuermh/adam-explorer)
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.heuermh.adamexplorer/adam-explorer_2.11.svg?maxAge=600)](http://search.maven.org/#search%7Cga%7C1%7Ccom.github.heuermh.adamexplorer)
+[![API Documentation](http://javadoc.io/badge/com.github.heuermh.adamexplorer/adam-explorer_2.11.svg?color=brightgreen&label=scaladoc)](http://javadoc.io/doc/com.github.heuermh.adamexplorer/adam-explorer)
+
+
 ### Hacking adam-explorer
 
 Install
@@ -8,7 +13,7 @@ Install
  * JDK 1.8 or later, http://openjdk.java.net
  * Apache Maven 3.3.9 or later, http://maven.apache.org
  * Apache Spark 2.4.3 or later, http://spark.apache.org
- * ADAM: Genomic Data System 0.28.0-SNAPSHOT or later, https://github.com/bigdatagenomics/adam
+ * ADAM: Genomic Data System 0.28.0 or later, https://github.com/bigdatagenomics/adam
 
 
 To build
@@ -22,7 +27,7 @@ To build
 $ spark-shell \
     --conf spark.serializer=org.apache.spark.serializer.KryoSerializer \
     --conf spark.kryo.registrator=org.bdgenomics.adam.serialization.ADAMKryoRegistrator \
-    --jars target/adam-explorer_2.11-0.28.0-SNAPSHOT.jar,adam-assembly-spark2_2.11-0.28.0-SNAPSHOT.jar
+    --jars target/adam-explorer_2.11-<version>-SNAPSHOT.jar,$PATH_TO_ADAM_ASSEMBLY_JAR
 
 ...
 Welcome to
