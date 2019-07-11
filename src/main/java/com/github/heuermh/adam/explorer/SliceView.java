@@ -38,8 +38,11 @@ import org.bdgenomics.adam.rdd.sequence.SliceDataset;
 
 import org.bdgenomics.adam.models.SequenceRecord;
 
+import org.bdgenomics.formats.avro.Alphabet;
 import org.bdgenomics.formats.avro.Slice;
 import org.bdgenomics.formats.avro.Reference;
+
+import org.dishevelled.identify.StripeTableCellRenderer;
 
 import org.dishevelled.eventlist.view.CountLabel;
 import org.dishevelled.eventlist.view.ElementsTable;
@@ -171,6 +174,9 @@ final class SliceView extends LabelFieldPanel {
         SliceTable(final SliceModel model) {
             super("Slices:", model.getSlices(), TABLE_FORMAT);
             this.model = model;
+
+            StripeTableCellRenderer renderer = new StripeTableCellRenderer();
+            getTable().setDefaultRenderer(Alphabet.class, renderer);
         }
 
 
