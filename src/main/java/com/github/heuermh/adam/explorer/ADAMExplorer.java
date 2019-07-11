@@ -22,9 +22,9 @@ import javax.swing.WindowConstants;
 import org.bdgenomics.adam.rdd.feature.FeatureDataset;
 import org.bdgenomics.adam.rdd.fragment.FragmentDataset;
 import org.bdgenomics.adam.rdd.read.AlignmentRecordDataset;
-//import org.bdgenomics.adam.rdd.read.ReadDataset;
-//import org.bdgenomics.adam.rdd.sequence.SequenceDataset;
-//import org.bdgenomics.adam.rdd.sequence.SliceDataset;
+import org.bdgenomics.adam.rdd.read.ReadDataset;
+import org.bdgenomics.adam.rdd.sequence.SequenceDataset;
+import org.bdgenomics.adam.rdd.sequence.SliceDataset;
 import org.bdgenomics.adam.rdd.variant.GenotypeDataset;
 import org.bdgenomics.adam.rdd.variant.VariantDataset;
 
@@ -38,7 +38,7 @@ public final class ADAMExplorer {
     /**
      * Explore the specified alignments.
      *
-     * @param alignments alignments to expore, must not be null
+     * @param alignments alignments to explore, must not be null
      * @return an exit code
      */
     public static int explore(final AlignmentRecordDataset alignments) {
@@ -72,7 +72,7 @@ public final class ADAMExplorer {
     /**
      * Explore the specified features.
      *
-     * @param features features to expore, must not be null
+     * @param features features to explore, must not be null
      * @return an exit code
      */
     public static int explore(final FeatureDataset features) {
@@ -106,7 +106,7 @@ public final class ADAMExplorer {
     /**
      * Explore the specified fragments.
      *
-     * @param fragments fragments to expore, must not be null
+     * @param fragments fragments to explore, must not be null
      * @return an exit code
      */
     public static int explore(final FragmentDataset fragments) {
@@ -140,7 +140,7 @@ public final class ADAMExplorer {
     /**
      * Explore the specified genotypes.
      *
-     * @param genotypes genotypes to expore, must not be null
+     * @param genotypes genotypes to explore, must not be null
      * @return an exit code
      */
     public static int explore(final GenotypeDataset genotypes) {
@@ -171,7 +171,12 @@ public final class ADAMExplorer {
         }
     }
 
-    /*
+    /**
+     * Explore the specified reads.
+     *
+     * @param reads reads to explore, must not be null
+     * @return an error code
+     */
     public static int explore(final ReadDataset reads) {
         SwingUtilities.invokeLater(new Runnable() {
                 @Override
@@ -182,7 +187,16 @@ public final class ADAMExplorer {
         return 0;
     }
 
+    /**
+     * Read explorer.
+     */
     static class ReadExplorer extends JFrame {
+
+        /**
+         * Create a new read explorer.
+         *
+         * @param reads reads to explore, must not be null
+         */
         ReadExplorer(final ReadDataset reads) {
             super("Reads");
             setSize(970, 600);
@@ -191,6 +205,12 @@ public final class ADAMExplorer {
         }
     }
 
+    /**
+     * Explore the specified sequences.
+     *
+     * @param sequences sequences to explore, must not be null
+     * @return an error code
+     */
     public static int explore(final SequenceDataset sequences) {
         SwingUtilities.invokeLater(new Runnable() {
                 @Override
@@ -201,7 +221,16 @@ public final class ADAMExplorer {
         return 0;
     }
 
+    /**
+     * Sequence explorer.
+     */
     static class SequenceExplorer extends JFrame {
+
+        /**
+         * Create a new sequence explorer.
+         *
+         * @param sequences sequences to explore, must not be null
+         */
         SequenceExplorer(final SequenceDataset sequences) {
             super("Sequences");
             setSize(970, 600);
@@ -210,6 +239,12 @@ public final class ADAMExplorer {
         }
     }
 
+    /**
+     * Explore the specified slices.
+     *
+     * @param slices slices to explore, must not be null
+     * @return an error code
+     */
     public static int explore(final SliceDataset slices) {
         SwingUtilities.invokeLater(new Runnable() {
                 @Override
@@ -220,7 +255,16 @@ public final class ADAMExplorer {
         return 0;
     }
 
+    /**
+     * Slice explorer.
+     */
     static class SliceExplorer extends JFrame {
+
+        /**
+         * Create a new slice explorer.
+         *
+         * @param slices slices to explore, must not be null
+         */
         SliceExplorer(final SliceDataset slices) {
             super("Slices");
             setSize(970, 600);
@@ -228,12 +272,11 @@ public final class ADAMExplorer {
             add("Center", new SliceView(slices));
         }
     }
-    */
 
     /**
      * Explore the specified variants.
      *
-     * @param variants variants to expore, must not be null
+     * @param variants variants to explore, must not be null
      * @return an exit code
      */
     public static int explore(final VariantDataset variants) {
