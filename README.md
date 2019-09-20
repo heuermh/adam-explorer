@@ -12,8 +12,8 @@ Install
 
  * JDK 1.8 or later, http://openjdk.java.net
  * Apache Maven 3.3.9 or later, http://maven.apache.org
- * Apache Spark 2.4.3 or later, http://spark.apache.org
- * ADAM: Genomic Data System 0.28.0 or later, https://github.com/bigdatagenomics/adam
+ * Apache Spark 2.4.4 or later, http://spark.apache.org
+ * ADAM: Genomic Data System 0.29.0 or later, https://github.com/bigdatagenomics/adam
 
 
 To build
@@ -34,7 +34,7 @@ Welcome to
       ____              __
      / __/__  ___ _____/ /__
     _\ \/ _ \/ _ `/ __/  '_/
-   /___/ .__/\_,_/_/ /_/\_\   version 2.4.3
+   /___/ .__/\_,_/_/ /_/\_\   version 2.4.4
       /_/
 
 Using Scala version 2.11.12 (Java HotSpot(TM) 64-Bit Server VM, Java 1.8.0_191)
