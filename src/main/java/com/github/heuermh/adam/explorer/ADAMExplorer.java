@@ -21,7 +21,7 @@ import javax.swing.WindowConstants;
 
 import org.bdgenomics.adam.rdd.feature.FeatureDataset;
 import org.bdgenomics.adam.rdd.fragment.FragmentDataset;
-import org.bdgenomics.adam.rdd.read.AlignmentRecordDataset;
+import org.bdgenomics.adam.rdd.read.AlignmentDataset;
 import org.bdgenomics.adam.rdd.read.ReadDataset;
 import org.bdgenomics.adam.rdd.sequence.SequenceDataset;
 import org.bdgenomics.adam.rdd.sequence.SliceDataset;
@@ -41,7 +41,7 @@ public final class ADAMExplorer {
      * @param alignments alignments to explore, must not be null
      * @return an exit code
      */
-    public static int explore(final AlignmentRecordDataset alignments) {
+    public static int explore(final AlignmentDataset alignments) {
         SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
@@ -61,7 +61,7 @@ public final class ADAMExplorer {
          *
          * @param alignments alignments to explore, must not be null
          */
-        AlignmentExplorer(final AlignmentRecordDataset alignments) {
+        AlignmentExplorer(final AlignmentDataset alignments) {
             super("Alignments");
             setSize(970, 600);
             setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);

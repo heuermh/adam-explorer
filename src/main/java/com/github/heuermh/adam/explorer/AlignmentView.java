@@ -42,12 +42,12 @@ import com.google.common.base.Joiner;
 
 import org.bdgenomics.adam.rdd.GenomicDataset;
 
-import org.bdgenomics.adam.rdd.read.AlignmentRecordDataset;
+import org.bdgenomics.adam.rdd.read.AlignmentDataset;
 
 import org.bdgenomics.adam.models.SequenceRecord;
 
 import org.bdgenomics.formats.avro.Reference;
-import org.bdgenomics.formats.avro.AlignmentRecord;
+import org.bdgenomics.formats.avro.Alignment;
 import org.bdgenomics.formats.avro.ProcessingStep;
 import org.bdgenomics.formats.avro.ReadGroup;
 
@@ -71,7 +71,7 @@ final class AlignmentView extends LabelFieldPanel {
      *
      * @param dataset dataset, must not be null
      */
-    AlignmentView(final AlignmentRecordDataset dataset) {
+    AlignmentView(final AlignmentDataset dataset) {
         super();
         model = new AlignmentModel(dataset);
         table = new AlignmentTable(model);
@@ -93,7 +93,7 @@ final class AlignmentView extends LabelFieldPanel {
         panel.setOpaque(false);
         panel.setBorder(new EmptyBorder(12, 12, 12, 12));
         panel.addField("Alignment count:", new DatasetCountLabel(model.getDataset()));
-        panel.addField("Alignments currently viewing:", new CountLabel<AlignmentRecord>(model.getAlignments()));
+        panel.addField("Alignments currently viewing:", new CountLabel<Alignment>(model.getAlignments()));
         panel.addSpacing(12);
         panel.addFinalField(table);
         return panel;
@@ -103,20 +103,20 @@ final class AlignmentView extends LabelFieldPanel {
      * Alignment model.
      */
     static class AlignmentModel {
-        private final AlignmentRecordDataset dataset;
+        private final AlignmentDataset dataset;
         private final EventList<Reference> references;
         private final EventList<ReadGroup> readGroups;
         private final EventList<ProcessingStep> processingSteps;
-        private final EventList<AlignmentRecord> alignments;
+        private final EventList<Alignment> alignments;
 
         /**
          * Create a new alignment model with the specified dataset.
          *
          * @param dataset dataset, must not be null
          */
-        AlignmentModel(final AlignmentRecordDataset dataset) {
+        AlignmentModel(final AlignmentDataset dataset) {
             this.dataset = dataset;
-            alignments = GlazedLists.eventList(new ArrayList<AlignmentRecord>());
+            alignments = GlazedLists.eventList(new ArrayList<Alignment>());
 
             List<SequenceRecord> s = JavaConversions.seqAsJavaList(dataset.sequences().records());;
             references = GlazedLists.eventList(s.stream().map(v -> v.toADAMReference()).collect(Collectors.toList()));
@@ -127,16 +127,16 @@ final class AlignmentView extends LabelFieldPanel {
         }
 
         void take(final int take) {
-            new SwingWorker<List<AlignmentRecord>, Void>() {
+            new SwingWorker<List<Alignment>, Void>() {
                 @Override
-                public List<AlignmentRecord> doInBackground() {
+                public List<Alignment> doInBackground() {
                     return dataset.jrdd().take(take);
                 }
 
                 @Override
                 public void done() {
                     try {
-                        List<AlignmentRecord> result = get();
+                        List<Alignment> result = get();
 
                         alignments.getReadWriteLock().writeLock().lock();
                         try {
@@ -154,11 +154,11 @@ final class AlignmentView extends LabelFieldPanel {
             }.execute();
         }
 
-        AlignmentRecordDataset getDataset() {
+        AlignmentDataset getDataset() {
             return dataset;
         }
 
-        EventList<AlignmentRecord> getAlignments() {
+        EventList<Alignment> getAlignments() {
             return alignments;
         }
 
@@ -178,11 +178,11 @@ final class AlignmentView extends LabelFieldPanel {
     /**
      * Alignment table.
      */
-    static class AlignmentTable extends ExplorerTable<AlignmentRecord> {
+    static class AlignmentTable extends ExplorerTable<Alignment> {
         private final AlignmentModel model;
         private static final String[] PROPERTY_NAMES = { "referenceName", "start", "end", "readName", "readGroupSampleId", "readGroupId" };
         private static final String[] COLUMN_LABELS = { "Reference Name", "Start", "End", "Read Name", "Sample", "Read Group" };
-        private static final TableFormat<AlignmentRecord> TABLE_FORMAT = GlazedLists.tableFormat(AlignmentRecord.class, PROPERTY_NAMES, COLUMN_LABELS);
+        private static final TableFormat<Alignment> TABLE_FORMAT = GlazedLists.tableFormat(Alignment.class, PROPERTY_NAMES, COLUMN_LABELS);
 
         /**
          * Create a new alignment table with the specified model.
@@ -196,7 +196,7 @@ final class AlignmentView extends LabelFieldPanel {
 
 
         @Override
-        protected String transferableString(final AlignmentRecord a) {
+        protected String transferableString(final Alignment a) {
             return Joiner
                 .on("\t")
                 .useForNull("")
