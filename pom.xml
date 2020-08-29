@@ -8,10 +8,10 @@
   </parent>
   <groupId>com.github.heuermh.adamexplorer</groupId>
   <artifactId>adam-explorer_2.11</artifactId>
-  <version>0.31.0-SNAPSHOT</version>
+  <version>0.32.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>adam-explorer_2.11</name>
+  <name>adam-explorer_2.12</name>
   <description>Interactive explorer for ADAM genomics data models.</description>
   <url>http://github.com/heuermh/adam-explorer</url>
   <inceptionYear>2018</inceptionYear>
@@ -35,10 +35,10 @@
     </developer>
   </developers>
   <properties>
-    <adam.version>0.30.0</adam.version>
-    <scala.version>2.11.12</scala.version>
-    <scala.artifact.suffix>2.11</scala.artifact.suffix>
-    <spark.version>2.4.4</spark.version>
+    <adam.version>0.32.0</adam.version>
+    <scala.version>2.12.8</scala.version>
+    <scala.artifact.suffix>2.12</scala.artifact.suffix>
+    <spark.version>3.0.0</spark.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.build.targetEncoding>UTF-8</project.build.targetEncoding>
     <maven.enforcer.maven-version>[3.3.1,)</maven.enforcer.maven-version>
@@ -225,7 +225,7 @@
       </dependency>
       <dependency>
         <groupId>org.bdgenomics.adam</groupId>
-        <artifactId>adam-core-spark2_${scala.artifact.suffix}</artifactId>
+        <artifactId>adam-core-spark3_${scala.artifact.suffix}</artifactId>
         <version>${adam.version}</version>
       </dependency>
       <dependency>
@@ -259,7 +259,7 @@
     </dependency>
     <dependency>
       <groupId>org.bdgenomics.adam</groupId>
-      <artifactId>adam-core-spark2_${scala.artifact.suffix}</artifactId>
+      <artifactId>adam-core-spark3_${scala.artifact.suffix}</artifactId>
       <scope>provided</scope>
     </dependency>
     <dependency>
