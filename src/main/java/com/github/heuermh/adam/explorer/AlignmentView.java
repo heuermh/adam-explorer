@@ -40,9 +40,9 @@ import ca.odell.glazedlists.gui.TableFormat;
 
 import com.google.common.base.Joiner;
 
-import org.bdgenomics.adam.rdd.GenomicDataset;
+import org.bdgenomics.adam.ds.GenomicDataset;
 
-import org.bdgenomics.adam.rdd.read.AlignmentDataset;
+import org.bdgenomics.adam.ds.read.AlignmentDataset;
 
 import org.bdgenomics.adam.models.SequenceRecord;
 
@@ -118,7 +118,7 @@ final class AlignmentView extends LabelFieldPanel {
             this.dataset = dataset;
             alignments = GlazedLists.eventList(new ArrayList<Alignment>());
 
-            List<SequenceRecord> s = JavaConversions.seqAsJavaList(dataset.sequences().records());;
+            List<SequenceRecord> s = JavaConversions.seqAsJavaList(dataset.references().records());;
             references = GlazedLists.eventList(s.stream().map(v -> v.toADAMReference()).collect(Collectors.toList()));
 
             List<org.bdgenomics.adam.models.ReadGroup> rg = JavaConversions.seqAsJavaList(dataset.readGroups().readGroups());

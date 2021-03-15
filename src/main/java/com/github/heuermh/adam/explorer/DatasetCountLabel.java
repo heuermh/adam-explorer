@@ -20,7 +20,7 @@ import java.util.concurrent.ExecutionException;
 import javax.swing.JLabel;
 import javax.swing.SwingWorker;
 
-import org.bdgenomics.adam.rdd.GenomicDataset;
+import org.bdgenomics.adam.ds.GenomicDataset;
 
 /**
  * Dataset count label.

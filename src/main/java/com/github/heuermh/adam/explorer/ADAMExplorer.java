@@ -19,14 +19,14 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
-import org.bdgenomics.adam.rdd.feature.FeatureDataset;
-import org.bdgenomics.adam.rdd.fragment.FragmentDataset;
-import org.bdgenomics.adam.rdd.read.AlignmentDataset;
-import org.bdgenomics.adam.rdd.read.ReadDataset;
-import org.bdgenomics.adam.rdd.sequence.SequenceDataset;
-import org.bdgenomics.adam.rdd.sequence.SliceDataset;
-import org.bdgenomics.adam.rdd.variant.GenotypeDataset;
-import org.bdgenomics.adam.rdd.variant.VariantDataset;
+import org.bdgenomics.adam.ds.feature.FeatureDataset;
+import org.bdgenomics.adam.ds.fragment.FragmentDataset;
+import org.bdgenomics.adam.ds.read.AlignmentDataset;
+import org.bdgenomics.adam.ds.read.ReadDataset;
+import org.bdgenomics.adam.ds.sequence.SequenceDataset;
+import org.bdgenomics.adam.ds.sequence.SliceDataset;
+import org.bdgenomics.adam.ds.variant.GenotypeDataset;
+import org.bdgenomics.adam.ds.variant.VariantDataset;
 
 /**
  * Interactive explorer for ADAM genomics data models.

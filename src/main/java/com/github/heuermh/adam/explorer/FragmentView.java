@@ -34,7 +34,7 @@ import ca.odell.glazedlists.gui.TableFormat;
 
 import com.google.common.base.Joiner;
 
-import org.bdgenomics.adam.rdd.fragment.FragmentDataset;
+import org.bdgenomics.adam.ds.fragment.FragmentDataset;
 
 import org.bdgenomics.adam.models.SequenceRecord;
 
@@ -107,7 +107,7 @@ final class FragmentView extends LabelFieldPanel {
             this.dataset = dataset;
             fragments = GlazedLists.eventList(new ArrayList<Fragment>());
 
-            List<SequenceRecord> s = JavaConversions.seqAsJavaList(dataset.sequences().records());;
+            List<SequenceRecord> s = JavaConversions.seqAsJavaList(dataset.references().records());;
             references = GlazedLists.eventList(s.stream().map(v -> v.toADAMReference()).collect(Collectors.toList()));
         }
 

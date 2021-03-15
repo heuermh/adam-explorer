@@ -36,7 +36,7 @@ import com.google.common.base.Joiner;
 
 import htsjdk.variant.vcf.VCFHeaderLine;
 
-import org.bdgenomics.adam.rdd.variant.VariantDataset;
+import org.bdgenomics.adam.ds.variant.VariantDataset;
 
 import org.bdgenomics.adam.models.SequenceRecord;
 
@@ -111,7 +111,7 @@ final class VariantView extends LabelFieldPanel {
             this.dataset = dataset;
             variants = GlazedLists.eventList(new ArrayList<Variant>());
 
-            List<SequenceRecord> s = JavaConversions.seqAsJavaList(dataset.sequences().records());
+            List<SequenceRecord> s = JavaConversions.seqAsJavaList(dataset.references().records());
             references = GlazedLists.eventList(s.stream().map(v -> v.toADAMReference()).collect(Collectors.toList()));
 
             headerLines = GlazedLists.eventList(JavaConversions.seqAsJavaList(dataset.headerLines()));

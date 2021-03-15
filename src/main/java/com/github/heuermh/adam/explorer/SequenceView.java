@@ -34,7 +34,7 @@ import ca.odell.glazedlists.gui.TableFormat;
 
 import com.google.common.base.Joiner;
 
-import org.bdgenomics.adam.rdd.sequence.SequenceDataset;
+import org.bdgenomics.adam.ds.sequence.SequenceDataset;
 
 import org.bdgenomics.adam.models.SequenceRecord;
 
@@ -111,7 +111,7 @@ final class SequenceView extends LabelFieldPanel {
             this.dataset = dataset;
             sequences = GlazedLists.eventList(new ArrayList<Sequence>());
 
-            List<SequenceRecord> s = JavaConversions.seqAsJavaList(dataset.sequences().records());;
+            List<SequenceRecord> s = JavaConversions.seqAsJavaList(dataset.references().records());;
             references = GlazedLists.eventList(s.stream().map(v -> v.toADAMReference()).collect(Collectors.toList()));
         }
 
