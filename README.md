@@ -13,7 +13,7 @@ Install
  * JDK 1.8 or later, http://openjdk.java.net
  * Apache Maven 3.3.9 or later, http://maven.apache.org
  * Apache Spark 3.0.2 or later, http://spark.apache.org
- * ADAM: Genomic Data System 0.34.0 or later, https://github.com/bigdatagenomics/adam
+ * ADAM: Genomic Data System 0.35.0 or later, https://github.com/bigdatagenomics/adam
 
 
 To build
@@ -41,14 +41,14 @@ Using Scala version 2.12.8 (Java HotSpot(TM) 64-Bit Server VM, Java 1.8.0_191)
 Type in expressions to have them evaluated.
 Type :help for more information.
 
-scala> import org.bdgenomics.adam.rdd.ADAMContext._
-import org.bdgenomics.adam.rdd.ADAMContext._
+scala> import org.bdgenomics.adam.ds.ADAMContext._
+import org.bdgenomics.adam.ds.ADAMContext._
 
 scala> import com.github.heuermh.adam.explorer.ADAMExplorer._
 import com.github.heuermh.adam.explorer.ADAMExplorer._
 
 scala> val alignments = sc.loadAlignments("sample.bam")
-alignments: org.bdgenomics.adam.rdd.read.AlignmentRecordRDD = RDDBoundAlignmentRecordRDD
+alignments: org.bdgenomics.adam.ds.read.AlignmentRecordRDD = RDDBoundAlignmentRecordRDD
 with 85 reference sequences, 3 read groups, and 0 processing steps
 
 scala> explore(alignments)
