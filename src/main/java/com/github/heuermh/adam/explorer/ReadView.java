@@ -41,6 +41,7 @@ import org.bdgenomics.adam.models.SequenceRecord;
 import org.bdgenomics.formats.avro.Alphabet;
 import org.bdgenomics.formats.avro.Read;
 import org.bdgenomics.formats.avro.Reference;
+import org.bdgenomics.formats.avro.Sample;
 
 import org.dishevelled.identify.StripeTableCellRenderer;
 
@@ -79,6 +80,7 @@ final class ReadView extends LabelFieldPanel {
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.add("Reads", layoutReadView());
         tabbedPane.add("References", new ReferenceView(model.getReferences()));
+        tabbedPane.add("Samples", new SampleView(model.getSamples()));
         addFinalField(tabbedPane);
     }
 
@@ -100,6 +102,7 @@ final class ReadView extends LabelFieldPanel {
         private final ReadDataset dataset;
         private final EventList<Read> reads;
         private final EventList<Reference> references;
+        private final EventList<Sample> samples;
 
 
         /**
@@ -113,6 +116,8 @@ final class ReadView extends LabelFieldPanel {
 
             List<SequenceRecord> s = JavaConversions.seqAsJavaList(dataset.references().records());;
             references = GlazedLists.eventList(s.stream().map(v -> v.toADAMReference()).collect(Collectors.toList()));
+
+            samples = GlazedLists.eventList(JavaConversions.seqAsJavaList(dataset.samples()));
         }
 
         void take(final int take) {
@@ -154,6 +159,10 @@ final class ReadView extends LabelFieldPanel {
         EventList<Reference> getReferences() {
             return references;
         }
+
+        EventList<Sample> getSamples() {
+            return samples;
+        }
     }
 
     /**
@@ -161,8 +170,8 @@ final class ReadView extends LabelFieldPanel {
      */
     static class ReadTable extends ExplorerTable<Read> {
         private final ReadModel model;
-        private static final String[] PROPERTY_NAMES = { "name", "description", "alphabet", "length", "sequence", "qualityScores" };
-        private static final String[] COLUMN_LABELS = { "Name", "Description", "Alphabet", "Length", "Sequence", "Quality Scores" };
+        private static final String[] PROPERTY_NAMES = { "name", "description", "sampleId", "alphabet", "length", "sequence", "qualityScores" };
+        private static final String[] COLUMN_LABELS = { "Name", "Description", "Sample", "Alphabet", "Length", "Sequence", "Quality Scores" };
         private static final TableFormat<Read> TABLE_FORMAT = GlazedLists.tableFormat(Read.class, PROPERTY_NAMES, COLUMN_LABELS);
 
 
@@ -185,7 +194,7 @@ final class ReadView extends LabelFieldPanel {
             return Joiner
                 .on("\t")
                 .useForNull("")
-                .join(r.name, r.description, r.alphabet, r.length, r.sequence, r.qualityScores);
+                .join(r.name, r.description, r.sampleId, r.alphabet, r.length, r.sequence, r.qualityScores);
         }
 
         @Override

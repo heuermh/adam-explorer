@@ -39,8 +39,9 @@ import org.bdgenomics.adam.ds.sequence.SequenceDataset;
 import org.bdgenomics.adam.models.SequenceRecord;
 
 import org.bdgenomics.formats.avro.Alphabet;
-import org.bdgenomics.formats.avro.Sequence;
 import org.bdgenomics.formats.avro.Reference;
+import org.bdgenomics.formats.avro.Sample;
+import org.bdgenomics.formats.avro.Sequence;
 
 import org.dishevelled.identify.StripeTableCellRenderer;
 
@@ -79,6 +80,7 @@ final class SequenceView extends LabelFieldPanel {
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.add("Sequences", layoutSequenceView());
         tabbedPane.add("References", new ReferenceView(model.getReferences()));
+        tabbedPane.add("Samples", new SampleView(model.getSamples()));
         addFinalField(tabbedPane);
     }
 
@@ -100,6 +102,7 @@ final class SequenceView extends LabelFieldPanel {
         private final SequenceDataset dataset;
         private final EventList<Sequence> sequences;
         private final EventList<Reference> references;
+        private final EventList<Sample> samples;
 
 
         /**
@@ -113,6 +116,8 @@ final class SequenceView extends LabelFieldPanel {
 
             List<SequenceRecord> s = JavaConversions.seqAsJavaList(dataset.references().records());;
             references = GlazedLists.eventList(s.stream().map(v -> v.toADAMReference()).collect(Collectors.toList()));
+
+            samples = GlazedLists.eventList(JavaConversions.seqAsJavaList(dataset.samples()));
         }
 
         void take(final int take) {
@@ -154,6 +159,10 @@ final class SequenceView extends LabelFieldPanel {
         EventList<Reference> getReferences() {
             return references;
         }
+
+        EventList<Sample> getSamples() {
+            return samples;
+        }
     }
 
     /**
@@ -161,8 +170,8 @@ final class SequenceView extends LabelFieldPanel {
      */
     static class SequenceTable extends ExplorerTable<Sequence> {
         private final SequenceModel model;
-        private static final String[] PROPERTY_NAMES = { "name", "description", "alphabet", "length", "sequence" };
-        private static final String[] COLUMN_LABELS = { "Name", "Description", "Alphabet", "Length", "Sequence" };
+        private static final String[] PROPERTY_NAMES = { "name", "description", "sampleId", "alphabet", "length", "sequence" };
+        private static final String[] COLUMN_LABELS = { "Name", "Description", "Sample", "Alphabet", "Length", "Sequence" };
         private static final TableFormat<Sequence> TABLE_FORMAT = GlazedLists.tableFormat(Sequence.class, PROPERTY_NAMES, COLUMN_LABELS);
 
 
@@ -185,7 +194,7 @@ final class SequenceView extends LabelFieldPanel {
             return Joiner
                 .on("\t")
                 .useForNull("")
-                .join(s.name, s.description, s.alphabet, s.length, s.sequence);
+                .join(s.name, s.description, s.sampleId, s.alphabet, s.length, s.sequence);
         }
 
         @Override

@@ -39,8 +39,9 @@ import org.bdgenomics.adam.ds.sequence.SliceDataset;
 import org.bdgenomics.adam.models.SequenceRecord;
 
 import org.bdgenomics.formats.avro.Alphabet;
-import org.bdgenomics.formats.avro.Slice;
 import org.bdgenomics.formats.avro.Reference;
+import org.bdgenomics.formats.avro.Sample;
+import org.bdgenomics.formats.avro.Slice;
 
 import org.dishevelled.identify.StripeTableCellRenderer;
 
@@ -79,6 +80,7 @@ final class SliceView extends LabelFieldPanel {
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.add("Slices", layoutSliceView());
         tabbedPane.add("References", new ReferenceView(model.getReferences()));
+        tabbedPane.add("Samples", new SampleView(model.getSamples()));
         addFinalField(tabbedPane);
     }
 
@@ -100,6 +102,7 @@ final class SliceView extends LabelFieldPanel {
         private final SliceDataset dataset;
         private final EventList<Slice> slices;
         private final EventList<Reference> references;
+        private final EventList<Sample> samples;
 
 
         /**
@@ -113,6 +116,8 @@ final class SliceView extends LabelFieldPanel {
 
             List<SequenceRecord> s = JavaConversions.seqAsJavaList(dataset.references().records());;
             references = GlazedLists.eventList(s.stream().map(v -> v.toADAMReference()).collect(Collectors.toList()));
+
+            samples = GlazedLists.eventList(JavaConversions.seqAsJavaList(dataset.samples()));
         }
 
         void take(final int take) {
@@ -154,6 +159,10 @@ final class SliceView extends LabelFieldPanel {
         EventList<Reference> getReferences() {
             return references;
         }
+
+        EventList<Sample> getSamples() {
+            return samples;
+        }
     }
 
     /**
@@ -161,8 +170,8 @@ final class SliceView extends LabelFieldPanel {
      */
     static class SliceTable extends ExplorerTable<Slice> {
         private final SliceModel model;
-        private static final String[] PROPERTY_NAMES = { "name", "description", "alphabet", "start", "end", "length", "index", "slices", "totalLength", "sequence" };
-        private static final String[] COLUMN_LABELS = { "Name", "Description", "Alphabet", "Start", "End", "Length", "Index", "Slices", "Total Length", "Sequence" };
+        private static final String[] PROPERTY_NAMES = { "name", "description", "sampleId", "alphabet", "start", "end", "length", "index", "slices", "totalLength", "sequence" };
+        private static final String[] COLUMN_LABELS = { "Name", "Description", "Sample", "Alphabet", "Start", "End", "Length", "Index", "Slices", "Total Length", "Sequence" };
         private static final TableFormat<Slice> TABLE_FORMAT = GlazedLists.tableFormat(Slice.class, PROPERTY_NAMES, COLUMN_LABELS);
 
 
@@ -185,7 +194,7 @@ final class SliceView extends LabelFieldPanel {
             return Joiner
                 .on("\t")
                 .useForNull("")
-                .join(s.name, s.description, s.alphabet, s.start, s.end, s.length, s.index, s.slices, s.totalLength, s.sequence);
+                .join(s.name, s.description, s.sampleId, s.alphabet, s.start, s.end, s.length, s.index, s.slices, s.totalLength, s.sequence);
         }
 
         @Override
