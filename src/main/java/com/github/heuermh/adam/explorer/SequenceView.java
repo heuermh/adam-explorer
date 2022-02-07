@@ -194,7 +194,7 @@ final class SequenceView extends LabelFieldPanel {
             return Joiner
                 .on("\t")
                 .useForNull("")
-                .join(s.name, s.description, s.sampleId, s.alphabet, s.length, s.sequence);
+                .join(s.getName(), s.getDescription(), s.getSampleId(), s.getAlphabet(), s.getLength(), s.getSequence());
         }
 
         @Override

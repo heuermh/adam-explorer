@@ -75,7 +75,7 @@ final class ReferenceView extends LabelFieldPanel {
             return Joiner
                 .on("\t")
                 .useForNull("")
-                .join(r.index, r.name, r.length, r.assembly, r.species, r.md5, r.sourceUri, r.sourceAccessions);
+                .join(r.getIndex(), r.getName(), r.getLength(), r.getAssembly(), r.getSpecies(), r.getMd5(), r.getSourceUri(), r.getSourceAccessions());
         }
     }
 }

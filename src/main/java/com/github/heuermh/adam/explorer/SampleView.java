@@ -75,7 +75,7 @@ final class SampleView extends LabelFieldPanel {
             return Joiner
                 .on("\t")
                 .useForNull("")
-                .join(s.name, s.id);
+                .join(s.getName(), s.getId());
         }
     }
 }

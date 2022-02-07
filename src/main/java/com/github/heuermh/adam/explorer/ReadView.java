@@ -194,7 +194,7 @@ final class ReadView extends LabelFieldPanel {
             return Joiner
                 .on("\t")
                 .useForNull("")
-                .join(r.name, r.description, r.sampleId, r.alphabet, r.length, r.sequence, r.qualityScores);
+                .join(r.getName(), r.getDescription(), r.getSampleId(), r.getAlphabet(), r.getLength(), r.getSequence(), r.getQualityScores());
         }
 
         @Override

@@ -75,7 +75,7 @@ final class ProcessingStepView extends LabelFieldPanel {
             return Joiner
                 .on("\t")
                 .useForNull("")
-                .join(ps.id, ps.previousId, ps.programName, ps.version, ps.commandLine, ps.description);
+                .join(ps.getId(), ps.getPreviousId(), ps.getProgramName(), ps.getVersion(), ps.getCommandLine(), ps.getDescription());
         }
     }
 }

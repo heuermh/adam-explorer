@@ -194,7 +194,7 @@ final class SliceView extends LabelFieldPanel {
             return Joiner
                 .on("\t")
                 .useForNull("")
-                .join(s.name, s.description, s.sampleId, s.alphabet, s.start, s.end, s.length, s.index, s.slices, s.totalLength, s.sequence);
+                .join(s.getName(), s.getDescription(), s.getSampleId(), s.getAlphabet(), s.getStart(), s.getEnd(), s.getLength(), s.getIndex(), s.getSlices(), s.getTotalLength(), s.getSequence());
         }
 
         @Override

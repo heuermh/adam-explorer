@@ -198,13 +198,13 @@ final class GenotypeView extends LabelFieldPanel {
                 .useForNull("")
                 .join
                 (
-                 g.referenceName,
-                 g.start,
-                 g.end,
+                 g.getReferenceName(),
+                 g.getStart(),
+                 g.getEnd(),
                  g.getVariant().getReferenceAllele(),
                  g.getVariant().getAlternateAllele(),
-                 g.alleles,
-                 g.sampleId
+                 g.getAlleles(),
+                 g.getSampleId()
                  );
         }
 

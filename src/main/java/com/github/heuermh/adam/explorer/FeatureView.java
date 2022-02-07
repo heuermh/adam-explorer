@@ -188,7 +188,7 @@ final class FeatureView extends LabelFieldPanel {
             return Joiner
                 .on("\t")
                 .useForNull("")
-                .join(f.referenceName, f.start, f.end, f.strand, f.name, f.featureId, f.featureType, f.score, f.sampleId);
+                .join(f.getReferenceName(), f.getStart(), f.getEnd(), f.getStrand(), f.getName(), f.getFeatureId(), f.getFeatureType(), f.getScore(), f.getSampleId());
         }
 
         @Override

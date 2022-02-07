@@ -177,7 +177,7 @@ final class FragmentView extends LabelFieldPanel {
             return Joiner
                 .on("\t")
                 .useForNull("")
-                .join(f.name, f.readGroupId, f.insertSize, f.alignments);
+                .join(f.getName(), f.getReadGroupId(), f.getInsertSize(), f.getAlignments());
         }
 
         @Override

@@ -200,7 +200,7 @@ final class AlignmentView extends LabelFieldPanel {
             return Joiner
                 .on("\t")
                 .useForNull("")
-                .join(a.referenceName, a.start, a.end, a.readName, a.readGroupSampleId, a.readGroupId);
+                .join(a.getReferenceName(), a.getStart(), a.getEnd(), a.getReadName(), a.getReadGroupSampleId(), a.getReadGroupId());
         }
 
         @Override

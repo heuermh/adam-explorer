@@ -187,7 +187,7 @@ final class VariantView extends LabelFieldPanel {
             return Joiner
                 .on("\t")
                 .useForNull("")
-                .join(v.referenceName, v.start, v.end, v.referenceAllele, v.alternateAllele);
+                .join(v.getReferenceName(), v.getStart(), v.getEnd(), v.getReferenceAllele(), v.getAlternateAllele());
         }
 
         @Override

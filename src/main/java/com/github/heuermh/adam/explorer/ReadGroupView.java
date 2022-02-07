@@ -77,18 +77,18 @@ final class ReadGroupView extends LabelFieldPanel {
                 .useForNull("")
                 .join
                 (
-                 rg.id,
-                 rg.sampleId,
-                 rg.description,
-                 rg.sequencingCenter,
-                 rg.runDateEpoch,
-                 rg.flowOrder,
-                 rg.keySequence,
-                 rg.library,
-                 rg.predictedMedianInsertSize,
-                 rg.platform,
-                 rg.platformModel,
-                 rg.platformUnit
+                 rg.getId(),
+                 rg.getSampleId(),
+                 rg.getDescription(),
+                 rg.getSequencingCenter(),
+                 rg.getRunDateEpoch(),
+                 rg.getFlowOrder(),
+                 rg.getKeySequence(),
+                 rg.getLibrary(),
+                 rg.getPredictedMedianInsertSize(),
+                 rg.getPlatform(),
+                 rg.getPlatformModel(),
+                 rg.getPlatformUnit()
                  );
         }
     }
